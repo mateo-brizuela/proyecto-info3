@@ -24,8 +24,15 @@ public class NodoArbol {
         this.right = right;
     }
 
-    // getters y setters
+    public boolean leftEmpty(){
+        return left == null;
+    }
 
+    public boolean rightEmpty(){
+        return right == null;
+    }
+
+    // getters y setters
     public NodoArbol getLelft(){
         return left;
     }
