@@ -3,7 +3,9 @@ package ProyectoJava.Practico8;
 public class NodoArbol {
     private NodoArbol right;
     private NodoArbol left;
-    private int size;
+    private int altura; // es la cantidad de conexiones desde el nodo hasta el nodo terminal mas lejano
+    private int profundidad; // es la cantidad de conexxiones desde el nodo hasta el nodo raiz
+    private int size; // el equilibrio del nodo
     private int dato; //dato del nodo
 
     
@@ -63,6 +65,14 @@ public class NodoArbol {
 
     public void setSize(int size){
         this.size = size;
+    }
+
+    public void setProfundidad(int profundidad){
+        this.profundidad = profundidad;
+    }
+
+    public int getProfundidad(){
+        return profundidad;
     }
     
 

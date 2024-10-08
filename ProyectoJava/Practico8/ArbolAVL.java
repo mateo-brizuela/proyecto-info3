@@ -54,7 +54,7 @@ public class ArbolAVL {
         if (isEmpty()) {
             System.out.println("no hay nodos en el arbol");
         }else{
-            buscarEliminar(nodoBuscado, root, null);
+            buscarEliminar(datoBuscado, root, null);
         }
     }
 
@@ -75,6 +75,43 @@ public class ArbolAVL {
             }
         }
 
+    }
+
+    public void actualizarProfundidad(NodoArbol nActual, int profundidad){
+        if (isEmpty()) {
+            System.out.println("no hay nodos en el arbol para calcular profundidad");
+            return;
+        }
+
+        //caso base
+        if ((nActual.leftEmpty() == true) && (nActual.rightEmpty() == true)) {
+            nActual.setProfundidad(profundidad);
+            return;
+        }
+
+        // yo enrealidad queria hacer tambien que si el nodo actual era nulo que se corte la ejecucion
+        // pero por algun motivo el compilado me da error si hago eso, asi que estoy usando esta forma ineficiente
+
+        if ((nActual.leftEmpty() == false) && (nActual.rightEmpty() == true)) {
+            nActual.setProfundidad(profundidad);
+            actualizarProfundidad(nActual.getLelft(), profundidad + 1);
+            return;
+        }
+
+        if ((nActual.leftEmpty() == true) && (nActual.rightEmpty() == false)) {
+            nActual.setProfundidad(profundidad);
+            actualizarProfundidad(nActual.getRight(), profundidad + 1);
+        }
+
+         // caso donde el nodo tenga 2 hijos
+        if ((nActual.leftEmpty() == false) && (nActual.rightEmpty() == false)) {
+            nActual.setProfundidad(profundidad);
+            actualizarProfundidad(nActual.getLelft(), profundidad + 1);
+            actualizarProfundidad(nActual.getRight(), profundidad + 1);
+            
+        }
+
+        
     }
 
     // esta funcion va a ubicar el nuevo nodo en la posicion que le corresponde del arbol
@@ -100,21 +137,25 @@ public class ArbolAVL {
         }
     }
 
-    private void buscarEliminar(NodoArbol nodoBuscado, NodoArbol nActual, NodoArbol nodoPadre){
+    private void buscarEliminar(int datoBuscado, NodoArbol nActual, NodoArbol nodoPadre){
+        // caso donde no se encontro un nodo con el dato buscado
         if (nActual == null) {
             System.out.println("no se encontraron coincidencias");
             return;
-        }else if (nodoBuscado.getDato() < nActual.getDato()) {
-            buscarEliminar(nodoBuscado, nActual.getLelft(), nActual);
 
-        }else if (nodoBuscado.getDato() > nActual.getDato()) {
-            buscarEliminar(nodoBuscado, nActual.getRight(), nActual);
+         // se recorre el arbol de forma recursiva buscando un nodo igual al dato
+        }else if (datoBuscado < nActual.getDato()) {
+            buscarEliminar(datoBuscado, nActual.getLelft(), nActual);
 
+        }else if (datoBuscado > nActual.getDato()) {
+            buscarEliminar(datoBuscado, nActual.getRight(), nActual);
+
+         // si este else se ejecuta es porque se encontro una coincidencia con el dato buscado
         }else{
             NodoArbol nodoMenorDerecho; // nodo que se usa para identificar el nodo menor del subarbo derecho
 
             if (nodoPadre == null) { // pregunta si el nodo a eliminar es la raiz
-                // pregunto si es el nodo raizy si no tiene hijos
+                // pregunto si es el nodo raiz no tiene hijos
                 if (nActual.leftEmpty() && nActual.rightEmpty()) {
                     root = null;
                     System.out.println("se eliminaron todos los nodos del arbol");
@@ -142,14 +183,17 @@ public class ArbolAVL {
                     System.out.println("se borro el nodo raiz");
                 }
 
+
               // pregunto si el nodo a borrar es un nodo terminal
             }else if (nActual.rightEmpty() && nActual.leftEmpty()) {
+                // esta comparacion se hace para saber cual enlace del nodo padre cambiar
                 if (nActual.getDato() > nodoPadre.getDato()) {
                     nodoPadre.setRight(null); //borro el nodo
                 }else{
                     nodoPadre.setLeft(null); //borro el nodo
                 }
                 System.out.println("se borro el nodo correctamente");
+
 
               // pregunto si tiene solo un hijo a la izquierda
             }else if ((nActual.rightEmpty() == true) && (nActual.leftEmpty() == false)) {
@@ -159,6 +203,7 @@ public class ArbolAVL {
                     nodoPadre.setLeft(nActual.getLelft()); //borro el nodo
                 }
                 System.out.println("se borro el nodo correctamente");
+
 
               // pregunto si solo tiene un hijo a la derecha
             }else if ((nActual.rightEmpty() == false) && (nActual.leftEmpty() == true)) {
