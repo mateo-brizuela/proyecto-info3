@@ -1,6 +1,7 @@
 package ProyectoJava.Practico8;
 
 public class NodoArbol {
+    private NodoArbol nPadre; //nodo padre
     private NodoArbol right;
     private NodoArbol left;
     private int altura; // es la cantidad de conexiones desde el nodo hasta el nodo terminal mas lejano
@@ -17,15 +18,19 @@ public class NodoArbol {
     public NodoArbol(int dato){
         right = null;
         left = null;
+        altura = 0;
+        profundidad = 0;
         this.dato = dato;
     }
 
-    public NodoArbol(int dato, NodoArbol left, NodoArbol right){
+    public NodoArbol(int dato, NodoArbol nPadre){
+        right = null;
+        left = null;
+        this.nPadre = nPadre;
         this.dato = dato;
-        this.left = left;
-        this.right = right;
     }
 
+    // funciones booleanas
     public boolean leftEmpty(){
         return left == null;
     }
@@ -73,6 +78,22 @@ public class NodoArbol {
 
     public int getProfundidad(){
         return profundidad;
+    }
+
+    public void setAltura(int altura){
+        this.altura = altura;
+    }
+
+    public int getAltura(){
+        return altura;
+    }
+
+    public void setNodoPadre(NodoArbol nPadre){
+        this.nPadre = nPadre;
+    }
+
+    public NodoArbol getNodoPadre(){
+        return nPadre;
     }
     
 
