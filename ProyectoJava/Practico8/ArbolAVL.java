@@ -78,57 +78,36 @@ public class ArbolAVL {
 
     }
 
-    // la profudidad se establece a medida que se van agregando los nodos al arbol
-    // esta funcion ya no es necesaria
-    /* 
-    public void actualizarProfundidad(NodoArbol nActual, int profundidad){
-        if (isEmpty()) {
-            System.out.println("no hay nodos en el arbol para calcular profundidad");
+
+    // funcion recursiva que actualiza la altura cuando se agrega un nodo
+    private void actualizarAltura(int alturaSugerida, NodoArbol nActual){
+        if (nActual == null) { // es por si la raiz actualiza la altura
             return;
         }
 
-        //caso base
-        if ((nActual.leftEmpty() == true) && (nActual.rightEmpty() == true)) {
-            nActual.setProfundidad(profundidad);
+        // si la altura sugerida es menor, significa que el otro subarbol tiene mayor altura
+        // por lo tanto desde este nodo hacia arriba no es necesario actualizar la altura
+        if (nActual.getAltura() >= alturaSugerida) { 
             return;
-        }
-
-        // yo enrealidad queria hacer tambien que si el nodo actual era nulo que se corte la ejecucion
-        // pero por algun motivo el compilado me da error si hago eso, asi que estoy usando esta forma ineficiente
-
-        if ((nActual.leftEmpty() == false) && (nActual.rightEmpty() == true)) {
-            nActual.setProfundidad(profundidad);
-            actualizarProfundidad(nActual.getLelft(), profundidad + 1);
-            return;
-        }
-
-        if ((nActual.leftEmpty() == true) && (nActual.rightEmpty() == false)) {
-            nActual.setProfundidad(profundidad);
-            actualizarProfundidad(nActual.getRight(), profundidad + 1);
-        }
-
-         // caso donde el nodo tenga 2 hijos
-        if ((nActual.leftEmpty() == false) && (nActual.rightEmpty() == false)) {
-            nActual.setProfundidad(profundidad);
-            actualizarProfundidad(nActual.getLelft(), profundidad + 1);
-            actualizarProfundidad(nActual.getRight(), profundidad + 1);
-            
+        }else{
+            nActual.setAltura(alturaSugerida);
+            actualizarAltura(alturaSugerida + 1, nActual.getNodoPadre());
         }
     }
-    */
 
-    public void actualizarAltura(){
 
-    }
+
+
 
     // esta funcion va a ubicar el nuevo nodo en la posicion que le corresponde del arbol
     private void BuscarAgregar(NodoArbol nuevoNodo, NodoArbol nActual, int profundidad){
         if (nuevoNodo.getDato() > nActual.getDato()) {
             if (nActual.rightEmpty()) {
-                nuevoNodo.setProfundidad(profundidad + 1);
-                nuevoNodo.setAltura(0);
+                nuevoNodo.setProfundidad(profundidad + 1); // asigno la profundidad al nuevo nodo
+                nuevoNodo.setAltura(0); // la altura de un nuevo nodo siempre es 0
                 nuevoNodo.setNodoPadre(nActual);
                 nActual.setRight(nuevoNodo);
+                actualizarAltura(1, nActual); // comienza a  actualizar la altura
             }else{
                 BuscarAgregar(nuevoNodo, nActual.getRight(), profundidad + 1);
             }
@@ -136,10 +115,11 @@ public class ArbolAVL {
 
         if (nuevoNodo.getDato() < nActual.getDato()) {
             if (nActual.leftEmpty()) {
-                nuevoNodo.setProfundidad(profundidad + 1);
-                nuevoNodo.setAltura(0);
+                nuevoNodo.setProfundidad(profundidad + 1); // asigno la profundidad al nuevo nodo
+                nuevoNodo.setAltura(0); // la altura de un nuevo nodo siempre es 0
                 nuevoNodo.setNodoPadre(nActual);
                 nActual.setLeft(nuevoNodo);
+                actualizarAltura(1, nActual); // comienza a  actualizar la altura
             }else{
                 BuscarAgregar(nuevoNodo, nActual.getLelft(), profundidad + 1);
             }
