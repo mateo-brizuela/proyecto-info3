@@ -8,13 +8,13 @@ public class Main {
         ArbolAVL2 arbol = new ArbolAVL2();
         int opcion = 0;
 
-        arbol.agregarConParametro(50);
-        arbol.agregarConParametro(40);
-        arbol.agregarConParametro(60);
         arbol.agregarConParametro(30);
-        arbol.agregarConParametro(45);
-        arbol.agregarConParametro(55);
-        arbol.agregarConParametro(70);
+        arbol.agregarConParametro(40);
+        arbol.agregarConParametro(20);
+        arbol.agregarConParametro(10);
+        arbol.agregarConParametro(50);
+        arbol.agregarConParametro(60);
+        arbol.agregarConParametro(5);
 
         while (opcion != 8) {
             System.out.println("ingrese una opcion:");
@@ -39,6 +39,7 @@ public class Main {
 
                 case 4:
                     arbol.leerDetalleArbol(arbol.getRoot(), 1);
+                    System.out.println("//////////////////////");
                     break;
             
                 default:

@@ -3,7 +3,7 @@ package ProyectoJava.Practico8;
 import java.util.Scanner;
 
 public class ArbolAVL2 {
- private NodoArbol root;
+    private NodoArbol root;
 
     // Obtener la raíz del árbol
     public NodoArbol getRoot() {
@@ -21,9 +21,8 @@ public class ArbolAVL2 {
             System.out.println("No hay nodos en el árbol");
             return null;
         }
-        if (nActual.leftEmpty()) { // Caso base: no hay más nodos a la izquierda
-            System.out.println("Se encontró el nodo menor");
-            return nActual;
+        if (nActual.leftEmpty()) {
+            return nActual; // Caso base: el nodo más a la izquierda es el menor
         } else {
             return nodoMenor(nActual.getLeft());
         }
@@ -32,42 +31,28 @@ public class ArbolAVL2 {
     // Método para agregar un nuevo nodo
     public void agregar() {
         Scanner consola = new Scanner(System.in);
-        NodoArbol nuevoNodo;
-        int nDato; // Nuevo dato
-        System.out.println("Ingrese el dato del nuevo nodo");
-        nDato = consola.nextInt();
-        nuevoNodo = new NodoArbol(nDato); // Se crea el nuevo nodo
+        System.out.println("Ingrese el dato del nuevo nodo:");
+        int nDato = consola.nextInt(); // Nuevo dato del nodo
+        agregarConParametro(nDato);
+    }
+
+    public void agregarConParametro(int dato) {
+        NodoArbol nuevoNodo = new NodoArbol(dato);
 
         if (isEmpty()) {
-            root = nuevoNodo;
-            nuevoNodo.setProfundidad(0); // El nodo raíz tiene profundidad 0
+            root = nuevoNodo; // El primer nodo se convierte en la raíz
+            nuevoNodo.setProfundidad(0); // La profundidad de la raíz es 0
             System.out.println("Se creó la raíz del árbol");
         } else {
             buscarAgregar(nuevoNodo, root, 0);
         }
     }
-
-    public void agregarConParametro(int dato){
-        NodoArbol nuevoNodo;
-        nuevoNodo = new NodoArbol(dato);
-
-        if (isEmpty()) {
-            root = nuevoNodo;
-            nuevoNodo.setProfundidad(0); // El nodo raíz tiene profundidad 0
-            System.out.println("Se creó la raíz del árbol");
-        } else {
-            buscarAgregar(nuevoNodo, root, 0);
-        }
-
-    }
-
 
     // Método para eliminar un nodo
     public void eliminar() {
         Scanner consola = new Scanner(System.in);
-        int datoBuscado;
-        System.out.println("Ingrese el dato del nodo a eliminar");
-        datoBuscado = consola.nextInt();
+        System.out.println("Ingrese el dato del nodo a eliminar:");
+        int datoBuscado = consola.nextInt();
 
         if (isEmpty()) {
             System.out.println("No hay nodos en el árbol");
@@ -78,35 +63,10 @@ public class ArbolAVL2 {
 
     // Método para leer el árbol en inorden (izquierda, raíz, derecha)
     public void leerArbol(NodoArbol nActual) {
-        if (isEmpty()) {
-            System.out.println("No hay nodos en el árbol para mostrar");
-            return;
-        }
-
-        if (!nActual.leftEmpty()) {
+        if (nActual != null) {
             leerArbol(nActual.getLeft());
-        }
-        System.out.println(nActual.getDato());
-        if (!nActual.rightEmpty()) {
+            System.out.println(nActual.getDato());
             leerArbol(nActual.getRight());
-        }
-    }
-
-    // Función que actualiza la altura de un nodo recursivamente
-    private void actualizarAltura(NodoArbol nActual) {
-        while (nActual != null) {
-            int alturaIzquierda = nActual.leftEmpty() ? -1 : nActual.getLeft().getAltura();
-            int alturaDerecha = nActual.rightEmpty() ? -1 : nActual.getRight().getAltura();
-
-            int nuevaAltura = Math.max(alturaIzquierda, alturaDerecha) + 1;
-
-            // Si la altura no cambia, no es necesario seguir actualizando
-            if (nActual.getAltura() == nuevaAltura) {
-                break;
-            }
-
-            nActual.setAltura(nuevaAltura);
-            nActual = nActual.getNodoPadre(); // Se continúa actualizando hacia arriba
         }
     }
 
@@ -131,35 +91,119 @@ public class ArbolAVL2 {
         }
     }
 
+    // Función que actualiza la altura y profundidad después de una rotación o inserción
+    private void actualizarAlturaYProfundidad(NodoArbol nodo) {
+        while (nodo != null) {
+            int alturaIzquierda = nodo.leftEmpty() ? -1 : nodo.getLeft().getAltura();
+            int alturaDerecha = nodo.rightEmpty() ? -1 : nodo.getRight().getAltura();
+            nodo.setAltura(Math.max(alturaIzquierda, alturaDerecha) + 1);
+            nodo.setProfundidad(nodo.getNodoPadre() == null ? 0 : nodo.getNodoPadre().getProfundidad() + 1);
 
+            // Actualizar el equilibrio del nodo
+            nodo.setSize(alturaDerecha - alturaIzquierda);
+
+            // Verificar si hay desbalance y reequilibrar
+            if (Math.abs(nodo.getSize()) > 1) {
+                rebalancear(nodo);
+            }
+            nodo = nodo.getNodoPadre();
+        }
+    }
+
+    // Rotación simple a la izquierda
+    private void rotacionIzquierda(NodoArbol nActual) {
+        NodoArbol nuevaRaiz = nActual.getRight();
+        NodoArbol subArbolIzquierdo = nuevaRaiz.getLeft();
+
+        nuevaRaiz.setLeft(nActual);
+        nActual.setRight(subArbolIzquierdo);
+
+        if (nActual == root) {
+            root = nuevaRaiz;
+        } else {
+            if (nActual.getNodoPadre().getLeft() == nActual) {
+                nActual.getNodoPadre().setLeft(nuevaRaiz);
+            } else {
+                nActual.getNodoPadre().setRight(nuevaRaiz);
+            }
+        }
+        nuevaRaiz.setNodoPadre(nActual.getNodoPadre());
+        nActual.setNodoPadre(nuevaRaiz);
+        if (subArbolIzquierdo != null) subArbolIzquierdo.setNodoPadre(nActual);
+
+        // Actualizar alturas y profundidades después de la rotación
+        actualizarAlturaYProfundidad(nActual);
+        actualizarAlturaYProfundidad(nuevaRaiz);
+    }
+
+    // Rotación simple a la derecha
+    private void rotacionDerecha(NodoArbol nActual) {
+        NodoArbol nuevaRaiz = nActual.getLeft();
+        NodoArbol subArbolDerecho = nuevaRaiz.getRight();
+
+        nuevaRaiz.setRight(nActual);
+        nActual.setLeft(subArbolDerecho);
+
+        if (nActual == root) {
+            root = nuevaRaiz;
+        } else {
+            if (nActual.getNodoPadre().getLeft() == nActual) {
+                nActual.getNodoPadre().setLeft(nuevaRaiz);
+            } else {
+                nActual.getNodoPadre().setRight(nuevaRaiz);
+            }
+        }
+        nuevaRaiz.setNodoPadre(nActual.getNodoPadre());
+        nActual.setNodoPadre(nuevaRaiz);
+        if (subArbolDerecho != null) subArbolDerecho.setNodoPadre(nActual);
+
+        // Actualizar alturas y profundidades después de la rotación
+        actualizarAlturaYProfundidad(nActual);
+        actualizarAlturaYProfundidad(nuevaRaiz);
+    }
+
+    // Rebalancea el árbol en caso de desbalance
+    public void rebalancear(NodoArbol nActual) {
+        if (nActual.getSize() < -1) {
+            if (nActual.getLeft().getSize() > 0) {
+                rotacionIzquierda(nActual.getLeft());
+            }
+            rotacionDerecha(nActual);
+        } else if (nActual.getSize() > 1) {
+            if (nActual.getRight().getSize() < 0) {
+                rotacionDerecha(nActual.getRight());
+            }
+            rotacionIzquierda(nActual);
+        }
+    }
 
     // Función para agregar un nuevo nodo en la posición correcta
     private void buscarAgregar(NodoArbol nuevoNodo, NodoArbol nActual, int profundidad) {
-        // Comparación para determinar si el nuevo nodo va a la derecha o a la izquierda
         if (nuevoNodo.getDato() > nActual.getDato()) {
             if (nActual.rightEmpty()) {
                 nuevoNodo.setProfundidad(profundidad + 1); // Asignar la profundidad correctamente
                 nuevoNodo.setAltura(0); // La altura de un nodo recién insertado es 0
                 nuevoNodo.setNodoPadre(nActual); // Enlazar con el nodo padre
                 nActual.setRight(nuevoNodo); // Insertar en la derecha
-                actualizarAltura(nActual); // Actualizar la altura a partir del padre
+                actualizarAlturaYProfundidad(nActual); // Actualizar la altura a partir del padre
             } else {
                 buscarAgregar(nuevoNodo, nActual.getRight(), profundidad + 1);
             }
         } else if (nuevoNodo.getDato() < nActual.getDato()) {
             if (nActual.leftEmpty()) {
-                nuevoNodo.setProfundidad(profundidad + 1); // Asignar la profundidad correctamente
-                nuevoNodo.setAltura(0); // La altura de un nodo recién insertado es 0
-                nuevoNodo.setNodoPadre(nActual); // Enlazar con el nodo padre
-                nActual.setLeft(nuevoNodo); // Insertar en la izquierda
-                actualizarAltura(nActual); // Actualizar la altura a partir del padre
+                nuevoNodo.setProfundidad(profundidad + 1);
+                nuevoNodo.setAltura(0);
+                nuevoNodo.setNodoPadre(nActual);
+                nActual.setLeft(nuevoNodo);
+                actualizarAlturaYProfundidad(nActual);
             } else {
                 buscarAgregar(nuevoNodo, nActual.getLeft(), profundidad + 1);
             }
         } else {
-            System.out.println("Error: no puede haber 2 nodos iguales");
+            System.out.println("Error: no puede haber 2 nodos con el mismo valor");
         }
     }
+
 
     // Función para eliminar un nodo del árbol
     private void buscarEliminar(int datoBuscado, NodoArbol nActual) {
