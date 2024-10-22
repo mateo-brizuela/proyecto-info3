@@ -22,7 +22,7 @@ public class ArbolAVL {
             System.out.println("se encontro el nodo menor");
             return nActual;
         }else{
-            return nodoMenor(nActual.getLelft());
+            return nodoMenor(nActual.getLeft());
         }
         
     }
@@ -68,7 +68,7 @@ public class ArbolAVL {
         if (nActual.leftEmpty()) {
             System.out.println(nActual.getDato());
         }else{
-            leerArbol(nActual.getLelft());
+            leerArbol(nActual.getLeft());
             System.out.println(nActual.getDato());
 
             if (nActual.rightEmpty() == false) {
@@ -121,7 +121,7 @@ public class ArbolAVL {
                 nActual.setLeft(nuevoNodo);
                 actualizarAltura(1, nActual); // comienza a  actualizar la altura
             }else{
-                BuscarAgregar(nuevoNodo, nActual.getLelft(), profundidad + 1);
+                BuscarAgregar(nuevoNodo, nActual.getLeft(), profundidad + 1);
             }
         }
 
@@ -138,7 +138,7 @@ public class ArbolAVL {
 
          // se recorre el arbol de forma recursiva buscando un nodo igual al dato
         }else if (datoBuscado < nActual.getDato()) {
-            buscarEliminar(datoBuscado, nActual.getLelft());
+            buscarEliminar(datoBuscado, nActual.getLeft());
 
         }else if (datoBuscado > nActual.getDato()) {
             buscarEliminar(datoBuscado, nActual.getRight());
@@ -162,7 +162,7 @@ public class ArbolAVL {
 
                 // pregunto si el nodo raiz tiene un hijo a la izquierda
                 if ((nActual.leftEmpty() == false) && (nActual.rightEmpty() == true)) {
-                    root = nActual.getLelft();
+                    root = nActual.getLeft();
                     System.out.println("se elimino el nodo raiz");
                 }
 
@@ -170,7 +170,7 @@ public class ArbolAVL {
                 if ((nActual.leftEmpty() == false) && (nActual.rightEmpty() == false)) {
                     // asigno el subarbol izquierdo al nodo menor de la derecha
                     nodoMenorDerecho = nodoMenor(nActual.getRight());
-                    nodoMenorDerecho.setLeft(nActual.getLelft());
+                    nodoMenorDerecho.setLeft(nActual.getLeft());
                     // borro el nodo raiz
                     root = nActual.getRight();
                     System.out.println("se borro el nodo raiz");
@@ -196,11 +196,11 @@ public class ArbolAVL {
             }else if ((nActual.rightEmpty() == true) && (nActual.leftEmpty() == false)) {
                 if (nActual.getDato() > nActual.getNodoPadre().getDato()) {
 
-                    nActual.getNodoPadre().setRight(nActual.getLelft()); //borro el nodo
+                    nActual.getNodoPadre().setRight(nActual.getLeft()); //borro el nodo
 
                 }else{
 
-                    nActual.getNodoPadre().setLeft(nActual.getLelft()); //borro el nodo
+                    nActual.getNodoPadre().setLeft(nActual.getLeft()); //borro el nodo
 
                 }
                 System.out.println("se borro el nodo correctamente");
@@ -223,9 +223,9 @@ public class ArbolAVL {
                 // el nodo menor del subarbol derecho
                 nodoMenorDerecho = nodoMenor(nActual.getRight());
                 // cuelgo el subarbol izquierdo en el menor nodo del subarbolderecho
-                nodoMenorDerecho.setLeft(nActual.getLelft()); 
+                nodoMenorDerecho.setLeft(nActual.getLeft()); 
 
-                nodoMenorDerecho.setLeft(nActual.getLelft());
+                nodoMenorDerecho.setLeft(nActual.getLeft());
                 if (nActual.getDato() > nActual.getNodoPadre().getDato()) {
 
                     nActual.getNodoPadre().setRight(nActual.getRight()); //borro el nodo
