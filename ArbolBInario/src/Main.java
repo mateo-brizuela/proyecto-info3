@@ -13,9 +13,9 @@ public class Main {
 do{
     System.out.println("Se presenta un menu de opciones:\n");
     System.out.println(
-                        "1-Generar arbol con números aleatorios\n"+
-                        "2-Metodo in Orden((izquierda, raíz, derecha)\n"+
-                        "3-?\n"+
+                        "1-Generar arbol con números aleatorios(no permite duplicados)\n"+
+                        "2-Generar arbol con numeros aleatorios(permite duplicados)\n"+
+                        "3-Metodo in Orden((izquierda, raíz, derecha)\n"+
                         "4-Cantidad de niveles del arbol\n"+
                         "5-Borrar nodo\n"+
                         "6-Imprimir arbol binario\n"+
@@ -25,7 +25,7 @@ do{
 
     switch (menu_op) {
         case 1:
-             // Insertar 10 números aleatorios entre 0 y 25
+        // Insertar 10 números aleatorios entre 0 y 25
         System.out.println("Insertando números:");
         for (int i = 0; i < 10; i++) {
             int numero = rand.nextInt(26);  // Genera un número entre 0 y 25
@@ -36,13 +36,21 @@ do{
         break;
 
         case 2:
-        // Mostrar los números en orden creciente
-        System.out.println("\n\nNúmeros en el árbol (inorden):");
-        arbol.inOrden(raiz);  // Realizar el recorrido inorden
+        // Insertar 10 números aleatorios entre 0 y 25
+        System.out.println("Insertando números:");
+        for (int i = 0; i < 10; i++) {
+            int numero = rand.nextInt(26);  // Genera un número entre 0 y 25
+            System.out.print(numero + " ");
+            raiz = arbol.insertar_duplicados(numero, raiz);  // Insertar el número en el árbol
+        }
         System.out.println("\n");
         break;
 
         case 3:
+        // Mostrar los números en orden creciente
+        System.out.println("\n\nNúmeros en el árbol (inorden):");
+        arbol.inOrden(raiz);  // Realizar el recorrido inorden
+        System.out.println("\n");
         break;
 
         case 4:
@@ -76,6 +84,5 @@ do{
         break;
     }
 }while(exit != true);      
-  
     }
 }

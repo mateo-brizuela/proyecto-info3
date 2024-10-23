@@ -9,9 +9,10 @@ public Tree() {
     root = null;
 }
 
-//metodo para insertar un nodo
+//metodo para insertar un nodo (no permite duplicados)
 Node insertar(int valor, Node t){
     if (t == null){
+        // Si el árbol está vacío, crea un nuevo nodo con el valor
         t = new Node(valor);
 
     }else if(valor < t.element){
@@ -22,7 +23,20 @@ Node insertar(int valor, Node t){
     }
     return t;
 }
-
+// Método para insertar un nodo (permite duplicados)
+Node insertar_duplicados(int valor, Node t) {
+    if (t == null) {
+        // Si el árbol está vacío, crea un nuevo nodo con el valor
+        t = new Node(valor);
+    } else if (valor < t.element) {
+        // Si el valor es menor, se inserta en el subárbol izquierdo
+        t.left = insertar_duplicados(valor, t.left);
+    } else {
+        // Si el valor es mayor o igual, se inserta en el subárbol derecho (permitiendo duplicados)
+        t.right = insertar_duplicados(valor, t.right);
+    }
+    return t; // Retorna la raíz del árbol modificado
+}
 //Método para imprimir el árbol de forma visual
 void imprimirArbol(Node t, String prefix, boolean isLeft) {
     if (t != null) {
@@ -80,7 +94,7 @@ Node eliminarMin(Node t){
     }
 }
 Node dtree(Node raiz, int valor) {
-    if (raiz == null) {//caso base:SI el arbol esta vacio
+    if (raiz == null) {//caso base:Si el arbol esta vacio
         System.out.println("El valor " + valor + " no se encuentra en el árbol.");
         return raiz;
     }
