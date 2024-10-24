@@ -40,7 +40,7 @@ public class NodoArbol {
     }
 
     // getters y setters
-    public NodoArbol getLelft(){
+    public NodoArbol getLeft(){
         return left;
     }
 
