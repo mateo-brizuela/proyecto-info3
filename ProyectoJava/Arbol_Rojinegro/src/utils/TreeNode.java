@@ -4,7 +4,7 @@ public class TreeNode {
     // ------------------ Atributos ------------------
     // informacion sobre el nodo
     private int data; // dato guardado en el nodo
-    private String color; // rojo o negro
+    private Color color; // rojo o negro
     private int hight; // como es un arbol rojinegro, hight = cant. de nodos NEGROS a uno terminal
     // conexiones entre nodos
     private TreeNode parent; // nodo padre
@@ -15,24 +15,17 @@ public class TreeNode {
     // constructores
     public TreeNode(int data){
         this.data = data;
-        color = "red";
-        hight = 0;
-        parent = null;
-        right = null;
-        left = null;
+        color = Color.RED;
     }
     public TreeNode(int data, TreeNode parent){
         this.data = data;
-        color = "red";
-        hight = 0;
+        color = Color.RED;
         this.parent = parent;
-        right = null;
-        left = null;
     }
 
     // metodos no triviales
     public boolean isRed(){ // devuelve 1 si el nodo es rojo
-        return(getColor().equals("red"));
+        return(getColor() == Color.RED);
     }
     public boolean rightEmpty(){ // devuelve 1 si no tiene hijo der.
         return(getRight() == null);
@@ -48,7 +41,7 @@ public class TreeNode {
     public void setData(int data){
         this.data = data;
     }
-    public void setColor(String color){
+    public void setColor(Color color){
         this.color = color;
     }
     public void setHight(int hight){
@@ -67,7 +60,7 @@ public class TreeNode {
     public int getData(){
         return data;
     }
-    public String getColor(){
+    public Color getColor(){
         return color;
     }
     public int getHight(){
