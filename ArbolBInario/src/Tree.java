@@ -10,39 +10,39 @@ public Tree() {
 }
 
 //metodo para insertar un nodo (no permite duplicados)
-Node insertar(int valor, Node t){
+Node insert(int value, Node t){
     if (t == null){
-        // Si el árbol está vacío, crea un nuevo nodo con el valor
-        t = new Node(valor);
+        // Si el árbol está vacío, crea un nuevo nodo con el value
+        t = new Node(value);
 
-    }else if(valor < t.element){
-        t.left=insertar(valor, t.left);
+    }else if(value < t.element){
+        t.left=insert(value, t.left);
 
-    }else if(valor > t.element){
-        t.right=insertar(valor, t.right);
+    }else if(value > t.element){
+        t.right=insert(value, t.right);
     }
     return t;
 }
 // Método para insertar un nodo (permite duplicados)
-Node insertar_duplicados(int valor, Node t) {
+Node insert_duplicate(int value, Node t) {
     if (t == null) {
-        // Si el árbol está vacío, crea un nuevo nodo con el valor
-        t = new Node(valor);
-    } else if (valor < t.element) {
-        // Si el valor es menor, se inserta en el subárbol izquierdo
-        t.left = insertar_duplicados(valor, t.left);
+        // Si el árbol está vacío, crea un nuevo nodo con el value
+        t = new Node(value);
+    } else if (value < t.element) {
+        // Si el value es menor, se inserta en el subárbol izquierdo
+        t.left = insert_duplicate(value, t.left);
     } else {
-        // Si el valor es mayor o igual, se inserta en el subárbol derecho (permitiendo duplicados)
-        t.right = insertar_duplicados(valor, t.right);
+        // Si el value es mayor o igual, se inserta en el subárbol derecho (permitiendo duplicados)
+        t.right = insert_duplicate(value, t.right);
     }
     return t; // Retorna la raíz del árbol modificado
 }
 //Método para imprimir el árbol de forma visual
-void imprimirArbol(Node t, String prefix, boolean isLeft) {
+void printTree(Node t, String prefix, boolean isLeft) {
     if (t != null) {
         System.out.println(prefix + (isLeft ? "├── " : "└── ") + t.element);
-        imprimirArbol(t.left, prefix + (isLeft ? "│   " : "    "), true);
-        imprimirArbol(t.right, prefix + (isLeft ? "│   " : "    "), false);
+        printTree(t.left, prefix + (isLeft ? "│   " : "    "), true);
+        printTree(t.right, prefix + (isLeft ? "│   " : "    "), false);
         }
 }
 
@@ -70,7 +70,7 @@ int depth(Node t) {
 
 //ELIMINAR UN NODO
  // Método para encontrar el nodo mínimo (para el caso de dos hijos)
- Node encontrarMin(Node t) {
+ Node findMin(Node t) {
     if(t != null){
         while (t.left != null) {
             t = t.left;
@@ -80,42 +80,42 @@ int depth(Node t) {
 }
 //Método para eliminar el nodo mínimo en el subárbol dado
 //El minimo siempre esta a la izquierda del arbol
-Node eliminarMin(Node t){
+Node eliminateMin(Node t){
     if(t==null){
     System.out.println("Arbol vacio.");
         return t;
     }
     else if(t.left != null){
-        t.left = eliminarMin(t.left);
+        t.left = eliminateMin(t.left);
         return t;
     }
     else{
         return t.right;
     }
 }
-Node dtree(Node raiz, int valor) {
-    if (raiz == null) {//caso base:Si el arbol esta vacio
-        System.out.println("El valor " + valor + " no se encuentra en el árbol.");
-        return raiz;
+Node dtree(Node root, int value) {
+    if (root == null) {//caso base:Si el arbol esta vacio
+        System.out.println("El value " + value + " no se encuentra en el árbol.");
+        return root;
     }
     //caso recursivo
     // Busca el nodo a eliminar
-    if (valor < raiz.element) {
-        raiz.left = dtree(raiz.left, valor);// Buscar en el subárbol izquierdo
-    } else if (valor > raiz.element) {
-        raiz.right = dtree(raiz.right, valor);// Buscar en el subárbol derecho
+    if (value < root.element) {
+        root.left = dtree(root.left, value);// Buscar en el subárbol izquierdo
+    } else if (value > root.element) {
+        root.right = dtree(root.right, value);// Buscar en el subárbol derecho
 
     //Nodo encontrado
     //caso 1:Nodo con 2 hijos
-    } else if (raiz.left != null && raiz.right != null){
-        raiz.element = encontrarMin(raiz.right).element;// Reemplaza el valor por el mínimo del subárbol derecho
-        raiz.right = eliminarMin(raiz.right);// Elimina el nodo mínimo del subárbol derecho
+    } else if (root.left != null && root.right != null){
+        root.element = findMin(root.right).element;// Reemplaza el value por el mínimo del subárbol derecho
+        root.right = eliminateMin(root.right);// Elimina el nodo mínimo del subárbol derecho
     }
     else{
     //Caso 2:Nodo con uno o ningun hijo
-        raiz = (raiz.left != null) ? raiz.left : raiz.right;// Reemplaza el nodo por su único hijo o null
+        root = (root.left != null) ? root.left : root.right;// Reemplaza el nodo por su único hijo o null
     }
-        return raiz;
+        return root;
 }
 
 }
