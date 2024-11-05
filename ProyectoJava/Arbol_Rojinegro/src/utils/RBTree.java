@@ -1,10 +1,13 @@
 package ProyectoJava.Arbol_Rojinegro.src.utils;
 
-public class RBTree {
+public class RBTree extends Tree{
     // ------------------------------------ Atributos ------------------------------------
     private TreeNode root; // puntero al primer elemento del arbol (a la "raiz")
     // ------------------------------------ Metodos ------------------------------------
-    // constructor 
+    // constructores
+    public RBTree(){
+
+    }
     public RBTree(TreeNode root){
         this.root = root;
     }
@@ -86,7 +89,7 @@ public class RBTree {
                     currentNode.setColor(Color.RED);
                     currentNode.getRight().setColor(Color.BLACK);
                     currentNode.getLeft().setColor(Color.BLACK);
-                    if(currentNode == root){ // el nodo era la raiz => lo hicimos rojo. PERO, por regla 2: la raiz DEBE ser negra
+                    if(currentNode == root){ // el nodo era la raiz => lo hicimos rojo. Por regla 2: la raiz DEBE ser negra
                         currentNode.setColor(Color.BLACK);
                     }
                     else{ // si el nodo no era la raiz, el intercambio de color podria haber introducido dos rojos consecutivos
@@ -193,5 +196,10 @@ public class RBTree {
         // redefinir relacion entre pivot y su padre
         pivot.setLeft(pivotParent);
         pivotParent.setParent(pivot);
+    }
+
+    // getters y setters
+    public TreeNode getRoot(){
+        return root;
     }
 }
