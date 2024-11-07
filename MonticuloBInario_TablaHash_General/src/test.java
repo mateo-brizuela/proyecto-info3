@@ -19,8 +19,10 @@ public static void main(String[] args) {
                             "3-Extraer el elemento de mayor prioridad del monticulo (Eliminar Min)\n"+
                             "\n----------TABLA HASH-----------\n"+
                             "4-Agregar elemento a tabla hash\n"+
-                            "5-\n"+
-                            "6-\n"+
+                            "5-Buscar elemento por clave\n"+
+                            "6-Eliminar un elemento por su clave.\n"+
+                            "\n-----GENERAL CON LIBRERIAS-----\n"+
+                            "\n-------------------------------\n"+
                             "7--Salir\n");
         System.out.println("Seleccione una opcion:");
         menu_op = console.nextInt();
@@ -59,21 +61,31 @@ public static void main(String[] args) {
         break;
 
         case 4:
-        System.out.println(("\nElementos posibles de agregar en la tabla:\n1-Numero\n2-Cadena\nRespuesta:"));
-        int n2 = console.nextInt();
-        if(n2 == 1){
-        System.out.println("\nIngrese el numero entero:");
-        int input1 = console.nextInt();
-        hashTable.put(input1);
-        System.out.println("\nElemento ingresado: " + input1);
-        }
-        else{
-        System.out.println("Ingrese cadena:");
-        console.nextLine();  // Limpiar el buffer
-        String input2 = console.nextLine();
-        hashTable.put(input2);
-        System.out.println("Elemento ingresado: " + input2);
-        }
+        System.out.println("\nIngrese la clave (numero entero o cadena):");
+        console.nextLine();
+        String keyInput = console.nextLine();
+        // Convertir el valor en número si es posible
+        Object key;
+            try {
+                key = Integer.parseInt(keyInput);
+            } catch (NumberFormatException e) {
+                key = keyInput; // Si no es número, se trata como cadena
+                }
+ 
+        System.out.println("Ingrese el valor (puede ser número o cadena):");
+        String valueInput = console.nextLine();
+
+        // Convertir el valor en número si es posible
+        Object value;
+            try {
+                value = Integer.parseInt(valueInput);
+            } catch (NumberFormatException e) {
+                value = valueInput; // Si no es número, se trata como cadena
+            }
+
+        hashTable.put(key, value);
+        System.out.println("Elemento ingresado - Clave: " + key + ", Valor: " + value);
+
         // Mostrar valores ingresados por buckets
         System.out.println("\nValores ingresados en la tabla hash:");
         for (int i = 0; i < hashTable.getBucketsSize(); i++) {
@@ -81,7 +93,67 @@ public static void main(String[] args) {
         }
         System.out.println();
         break;
-    
+
+        case 5:
+         // Mostrar valores ingresados por buckets
+         System.out.println("\nValores ingresados en la tabla hash:");
+         for (int i = 0; i < hashTable.getBucketsSize(); i++) {
+             hashTable.printBucket(i); // Imprimir los contenidos de cada bucket
+         }
+         System.out.println();
+
+        System.out.println("\nIngrese la clave que desea buscar:");
+        console.nextLine();  // Limpiar el buffer
+        String searchKeyInput = console.nextLine();
+        
+        // Convertir el valor en número si es posible
+        Object searchKey;
+            try {
+                searchKey = Integer.parseInt(searchKeyInput);
+            } catch (NumberFormatException e) {
+                searchKey = searchKeyInput; // Si no es número, se trata como cadena
+            }
+
+        // Buscar el elemento en la tabla hash
+        Object searchResult = hashTable.search_element(searchKey);
+            if (searchResult != null) {
+                System.out.println("Elemento encontrado - [Clave: " + searchKey + ", Valor: " + searchResult+"]\n");
+            } else {
+                System.out.println("Elemento no encontrado para la clave: " + searchKey + "\n");
+                }
+        break;
+
+        case 6:
+          // Mostrar valores ingresados por buckets
+          System.out.println("\nValores ingresados en la tabla hash:");
+          for (int i = 0; i < hashTable.getBucketsSize(); i++) {
+              hashTable.printBucket(i); // Imprimir los contenidos de cada bucket
+          }
+          System.out.println();
+ 
+        System.out.println("\nIngrese la clave (número entero o cadena) del elemento a eliminar:");
+        console.nextLine();
+        String keyInput2 = console.nextLine();
+        
+        // Convertir la clave en número si es posible
+        Object key2;
+        try {
+            key2 = Integer.parseInt(keyInput2); // Si es un número, se convierte
+        } catch (NumberFormatException e) {
+            key2 = keyInput2; // Si no es número, lo tratamos como cadena
+        }
+        
+        // Llamar al método remove para eliminar el elemento
+        hashTable.remove(key2);
+        
+        // Mostrar los valores por cada bucket después de la eliminación
+        System.out.println("\nValores restantes en la tabla hash:");
+        for (int i = 0; i < hashTable.getBucketsSize(); i++) {
+            hashTable.printBucket(i); // Imprimir los contenidos de cada bucket
+        }
+        
+        break;
+
         case 7:
         exit = true;
         break;
