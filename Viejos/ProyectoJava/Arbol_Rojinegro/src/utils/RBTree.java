@@ -1,6 +1,8 @@
 package ProyectoJava.Arbol_Rojinegro.src.utils;
 
-public class RBTree extends Tree{
+import Utils.BinaryTree.Color;
+
+public class RBTree extends SelfEquilTree{
     // ------------------------------------ Atributos ------------------------------------
     private TreeNode root; // puntero al primer elemento del arbol (a la "raiz")
     // ------------------------------------ Metodos ------------------------------------

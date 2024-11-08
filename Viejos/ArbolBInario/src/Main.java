@@ -3,7 +3,7 @@ import java.util.*;
 public class Main {
  public static void main(String[] args) {
 //variables
-        Tree tree = new Tree();  // Crear el árbol
+        SelfEquilTree tree = new SelfEquilTree();  // Crear el árbol
         Node root = null;         // Raíz del árbol inicialmente vacía
         Random rand = new Random();
         int menu_op = 0;
