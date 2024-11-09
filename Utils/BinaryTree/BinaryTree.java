@@ -3,7 +3,7 @@ package Utils.BinaryTree;
 public abstract class BinaryTree {
     private TreeNode root;
 
-    public abstract void insert(); // particular de cada arbol
+    public abstract void insert(TreeNode node); // particular de cada arbol
     public abstract TreeNode delete(); // particular de cada arbol
 
     // ------------ Metodos comunes ------------

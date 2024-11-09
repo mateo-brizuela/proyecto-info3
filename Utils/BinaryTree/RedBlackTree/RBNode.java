@@ -1,17 +1,19 @@
-package Utils.BinaryTree;
+package Utils.BinaryTree.RedBlackTree;
+
+import Utils.BinaryTree.*;
 
 public class RBNode extends TreeNode {
     private Color color; // rojo o negro
 
     // constructores
     public RBNode(int data){
-        this.data = data;
-        color = Color.RED;
+        setData(data);
+        setColor(Color.RED);
     }
-    public RBNode(int data, TreeNode parent){
-        this.data = data;
-        color = Color.RED;
-        this.parent = parent;
+    public RBNode(int data, RBNode parent){
+        setData(data);
+        setColor(Color.RED);
+        setParent(parent);
     }
 
     @Override

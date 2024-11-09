@@ -1,8 +1,8 @@
 package Utils.BinaryTree;
 
-public class SelfEquilTree extends BinaryTree{
+public abstract class SelfEquilTree extends BinaryTree{
     // rotaciones 
-    private void rotateRightSimple(TreeNode pivot){ // recibe el nodo que quedara como raiz del subarbol
+    protected void rotateRightSimple(TreeNode pivot){ // recibe el nodo que quedara como raiz del subarbol
         TreeNode pivotParent = pivot.getParent();
         TreeNode rChild = pivot.getRight();
 
@@ -29,7 +29,7 @@ public class SelfEquilTree extends BinaryTree{
         pivot.setRight(pivotParent);
         pivotParent.setParent(pivot);
     }
-    private void rotateLeftSimple(TreeNode pivot){ // recibe el nodo que quedara como raiz del subarbol
+    protected void rotateLeftSimple(TreeNode pivot){ // recibe el nodo que quedara como raiz del subarbol
         TreeNode pivotParent = pivot.getParent();
         TreeNode lChild = pivot.getLeft();
 
