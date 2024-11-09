@@ -2,7 +2,7 @@ package Utils.BinaryTree.RedBlackTree;
 
 import Utils.BinaryTree.*;
 
-public class RBNode extends TreeNode {
+public class RBNode extends TreeNode<RBNode> {
     private Color color; // rojo o negro
 
     // constructores

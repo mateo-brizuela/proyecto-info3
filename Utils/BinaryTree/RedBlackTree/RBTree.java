@@ -2,113 +2,91 @@ package Utils.BinaryTree.RedBlackTree;
 
 import Utils.BinaryTree.*;
 
-public class RBTree extends SelfEquilTree{
+public class RBTree extends SelfEquilTree<RBNode> {
 
     @Override
-    public void insert(TreeNode newNode) {
-        RBNode currentNode = getRoot();
+    public void insert(RBNode newNode) {
+        RBNode currentNode = (RBNode) getRoot();
         boolean found = false;
 
-        if(getRoot() == null){ // caso 1: arbol vacio => se inserta en la raiz
+        if (getRoot() == null) { // caso 1: árbol vacío => se inserta en la raíz
             setRoot(newNode);
-            getRoot().setColor(Color.BLACK); // propiedad 2: la raiz debe ser negra
-        }
-        else{ // caso 2: el arbol ya tiene elementos
-            while(found == false){ // busca el lugar donde va el nodo
-                colorBalanceDown(currentNode); // algunas cond. de color se controlan mientras bajamos
-                if(newNode.getData() >= currentNode.getData()){ // es mayor o igual => miro a la derecha
-                    if(currentNode.getRight() != null){ // el hijo der no esta vacio => segui buscando
+            newNode.setColor(Color.BLACK); // propiedad 2: la raíz debe ser negra
+        } else { // caso 2: el árbol ya tiene elementos
+            while (!found) { // busca el lugar donde va el nodo
+                colorBalanceDown(currentNode); // algunas condiciones de color se controlan mientras bajamos
+                if (newNode.getData() >= currentNode.getData()) { // es mayor o igual => miro a la derecha
+                    if (currentNode.getRight() != null) { // el hijo der no está vacío => sigue buscando
                         currentNode = currentNode.getRight();
-                    }
-                    else{ // el hijo der esta vacio => ahi va newNode
+                    } else { // el hijo der está vacío => ahí va newNode
                         found = true;
                         currentNode.setRight(newNode);
                     }
-                }
-                else{ // newNode.getData() < currentNode.getData() // es menor => miro a la izq
-                    if(currentNode.getLeft() != null){ // hijo izq NO vacio => segui buscando
+                } else { // newNode.getData() < currentNode.getData() // es menor => miro a la izquierda
+                    if (currentNode.getLeft() != null) { // hijo izquierdo NO vacío => sigue buscando
                         currentNode = currentNode.getLeft();
-                    }
-                    else{ // hijo izq vacio => ahi va newNode
+                    } else { // hijo izquierdo vacío => ahí va newNode
                         found = true;
                         currentNode.setLeft(newNode);
                     }
                 }
             }
-            newNode.setParent(currentNode); // la actualizacion del padre es igual para los dos casos
-            solveExtraRedness(newNode); // mira si hay dos rojos consecutivos tras insertar. Si es asi, lo resuelve
+            newNode.setParent(currentNode); // la actualización del padre es igual para ambos casos
+            solveExtraRedness(newNode); // resuelve si hay dos rojos consecutivos tras insertar
         }
     }
-    
+
     @Override
-    public TreeNode delete(){
-        // ToDo: implementar excepcion ;
-        throw new UnsupportedOperationException("Unimplemented method 'insert'");
+    public RBNode delete() {
+        // ToDo: implementar excepción
+        throw new UnsupportedOperationException("Unimplemented method 'delete'");
     }
 
     // --------- control de propiedades ---------
-    // respecto de color
-    private void colorBalanceDown(RBNode currentNode){ // mantiene la consistencia de color de los nodos a medida que avanzamos hacia las hojas
-        if(currentNode.isRed() == false){ // el nodo es negro 
-            if((currentNode.rightEmpty() == false && currentNode.leftEmpty() == false)){ // el nodo tiene 2 hijos
-                if((currentNode.getRight().isRed() && currentNode.getLeft().isRed())){ // ambos hijos son rojos
-                    // tenemos padre negro con 2 hijos rojos => intercambio de color entre padre e hijos
+    // respecto al color
+    private void colorBalanceDown(RBNode currentNode) { // mantiene la consistencia de color mientras avanzamos
+        if (!currentNode.isRed()) { // el nodo es negro 
+            if (!currentNode.rightEmpty() && !currentNode.leftEmpty()) { // el nodo tiene 2 hijos
+                if (currentNode.getRight().isRed() && currentNode.getLeft().isRed()) { // ambos hijos son rojos
+                    // padre negro con 2 hijos rojos => intercambio de color entre padre e hijos
                     currentNode.setColor(Color.RED);
                     currentNode.getRight().setColor(Color.BLACK);
                     currentNode.getLeft().setColor(Color.BLACK);
-                    if(currentNode == root){ // el nodo era la raiz => lo hicimos rojo. Por regla 2: la raiz DEBE ser negra
+                    if (currentNode == getRoot()) { // si es la raíz, debe ser negra
                         currentNode.setColor(Color.BLACK);
-                    }
-                    else{ // si el nodo no era la raiz, el intercambio de color podria haber introducido dos rojos consecutivos
+                    } else { // si no es la raíz, puede haber dos rojos consecutivos
                         solveExtraRedness(currentNode);
                     }
                 }
             }
         }
     }
-    private void solveExtraRedness(RBNode currentNode){ // mira si hay dos rojos consecutivos. Si es asi, lo resuelve
+
+    private void solveExtraRedness(RBNode currentNode) { // resuelve si hay dos rojos consecutivos
         RBNode parentNode = currentNode.getParent();
 
-        if(currentNode.isRed() && parentNode.isRed()){ // hay dos rojos consecutivos
-            /*
-            Combinaciones de orden posibles (se resuelven distinto): 
-                - current es hDer y parent es hDer
-                - current es hIzq y parent es hIzq
-                - current es hDer y parent es hIzq
-                - current es hIzq y parent es hDer
-            */
-            if(currentNode == parentNode.getRight() && parentNode == parentNode.getParent().getRight()){ // current es hDer y parent es hDer
-                // rotacion 
+        if (currentNode.isRed() && parentNode.isRed()) { // hay dos rojos consecutivos
+            if (currentNode == parentNode.getRight() && parentNode == parentNode.getParent().getRight()) {
+                // rotación y cambio de color
                 rotateLeftSimple(parentNode);
-                // cambio de color
                 parentNode.setColor(Color.BLACK);
                 parentNode.getLeft().setColor(Color.RED);
-            } 
-            else if(currentNode == parentNode.getLeft() && parentNode == parentNode.getParent().getLeft()){ // current es hIzq y parent es hIzq
-                // rotacion 
+            } else if (currentNode == parentNode.getLeft() && parentNode == parentNode.getParent().getLeft()) {
                 rotateRightSimple(parentNode);
-                // cambio de color
                 parentNode.setColor(Color.BLACK);
                 parentNode.getRight().setColor(Color.RED);
-            }
-            else if(currentNode == parentNode.getRight() && parentNode == parentNode.getParent().getLeft()){ // current es hDer y parent es hIzq
-                // rotacion 
+            } else if (currentNode == parentNode.getRight() && parentNode == parentNode.getParent().getLeft()) {
                 rotateLeftSimple(currentNode);
                 rotateRightSimple(currentNode);
-                // cambio de color
                 currentNode.setColor(Color.BLACK);
                 currentNode.getRight().setColor(Color.RED);
-            }
-            else{ // current es hIzq y parent es hDer
-                // rotacion 
+            } else { // current es hijo izquierdo y parent es hijo derecho
                 rotateRightSimple(currentNode);
                 rotateLeftSimple(currentNode);
-                // cambio de color
                 currentNode.setColor(Color.BLACK);
                 currentNode.getLeft().setColor(Color.RED);
             }
         }
     }
-
-
 }
+

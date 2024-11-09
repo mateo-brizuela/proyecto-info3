@@ -1,14 +1,14 @@
 package Utils.BinaryTree;
 
-public abstract class BinaryTree {
-    private TreeNode root;
+public abstract class BinaryTree<T extends TreeNode<T>> {
+    private T root;
 
-    public abstract void insert(TreeNode node); // particular de cada arbol
-    public abstract TreeNode delete(); // particular de cada arbol
+    public abstract void insert(T node); // particular de cada arbol
+    public abstract T delete(); // particular de cada arbol
 
     // ------------ Metodos comunes ------------
     // Método para imprimir el árbol de forma visual 
-    public void printTree(TreeNode node, String prefix, boolean isLeft) { // primer llamado: tree.printTree(root, "", false); 
+    public void printTree(T node, String prefix, boolean isLeft) { // primer llamado: tree.printTree(root, "", false); 
         if (node != null) {
             System.out.println(prefix + (isLeft ? "├── " : "└── ") + node); // para que funciones se debe sobreescribir el metodo toString del nodo empleado
             printTree(node.getLeft(), prefix + (isLeft ? "│   " : "    "), true);
@@ -16,7 +16,7 @@ public abstract class BinaryTree {
         }
     }
 
-    public TreeNode findMin(TreeNode node) {
+    public T findMin(T node) {
         if(node != null){
             while (node.getLeft() != null) {
                 node = node.getLeft();
@@ -25,8 +25,8 @@ public abstract class BinaryTree {
         return node;
     }
 
-    public TreeNode searchNode(int data){
-        TreeNode currentNode = root;
+    public T searchNode(int data){
+        T currentNode = root;
         boolean found = false;
 
         while(currentNode != null && found == false){
@@ -51,10 +51,10 @@ public abstract class BinaryTree {
     }
     
     // getters y setters
-    public TreeNode getRoot(){
+    public T getRoot(){
         return root;
     }
-    public void setRoot(TreeNode root){
+    public void setRoot(T root){
         this.root = root;
     }
 }

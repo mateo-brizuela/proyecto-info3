@@ -1,12 +1,12 @@
 package Utils.BinaryTree;
 
-public class TreeNode {
+public class TreeNode<T extends TreeNode<T>> {
     // ------------------ Atributos ------------------
     private int data; // dato guardado en el nodo
     // conexiones entre nodos
-    private TreeNode parent; // nodo padre
-    private TreeNode right; // nodo hijo derecho
-    private TreeNode left; // nodo hijo izquierdo
+    private T parent; // nodo padre
+    private T right; // nodo hijo derecho
+    private T left; // nodo hijo izquierdo
 
     // ------------------ Metodos ------------------
     public boolean rightEmpty(){ // devuelve 1 si no tiene hijo der.
@@ -23,26 +23,26 @@ public class TreeNode {
     public void setData(int data){
         this.data = data;
     }
-    public void setParent(TreeNode parent){
+    public void setParent(T parent){
         this.parent = parent;
     }
-    public void setRight(TreeNode right){
+    public void setRight(T right){
         this.right = right;
     }
-    public void setLeft(TreeNode left){
+    public void setLeft(T left){
         this.left = left;
     }
 
     public int getData(){
         return data;
     }
-    public TreeNode getParent(){
+    public T getParent(){
         return parent;
     }
-    public TreeNode getRight(){
+    public T getRight(){
         return right;
     }
-    public TreeNode getLeft(){
+    public T getLeft(){
         return left;
     }
 }
