@@ -38,8 +38,7 @@ public class RBTree extends SelfEquilTree<RBNode> {
 
     @Override
     public RBNode delete() {
-        // ToDo: implementar excepción
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        throw new UnsupportedOperationException("Metodo 'delete' no implementado.\n");
     }
 
     // --------- control de propiedades ---------
@@ -64,6 +63,15 @@ public class RBTree extends SelfEquilTree<RBNode> {
 
     private void solveExtraRedness(RBNode currentNode) { // resuelve si hay dos rojos consecutivos
         RBNode parentNode = currentNode.getParent();
+        
+        /*
+        Este problema se puede presentar en 4 formas: 
+            hDer y hDer
+            hIzq y hIzq
+            hDer y hIzq
+            hIzq y hDer
+        Cada forma se soluciona con una combinacion diferente de rotaciones.
+        */
 
         if (currentNode.isRed() && parentNode.isRed()) { // hay dos rojos consecutivos
             if (currentNode == parentNode.getRight() && parentNode == parentNode.getParent().getRight()) {
