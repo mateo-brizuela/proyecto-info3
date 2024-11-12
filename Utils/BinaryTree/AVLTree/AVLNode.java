@@ -4,6 +4,12 @@ import Utils.BinaryTree.*;
 public class AVLNode extends TreeNode<AVLNode> {
     private int height; // Altura del nodo
 
+
+    @Override
+    public String toString() {
+        return (getData() + " ");
+    }
+
     // Constructor que inicializa el nodo con el dato y una altura de 1
     public AVLNode(int data) {
         setData(data);
