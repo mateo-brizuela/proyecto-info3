@@ -1,19 +1,19 @@
-package ProyectoJava.Practico1;
+package Utils.RecursiveFunctions;
 
-public class ConteoRegresivo {
+public class Countdown {
 
     public static void main(String[] args) {
         int n = 4;
         System.out.print("Conteo regresivo desde " + n + ": ");
-        conteoRegresivo(n);
+        doCountdown(n);
     }
 
-    public static void conteoRegresivo(int n) {
+    public static void doCountdown(int n) {
         if (n < 1) {
             return; // Caso base: detener la recursión cuando n es menor a 1
         }
         
         System.out.print(n + (n > 1 ? ", " : "")); // Imprime el número y agrega una coma si no es el último
-        conteoRegresivo(n - 1); // Llamada recursiva con n reducido en 1
+        doCountdown(n - 1); // Llamada recursiva con n reducido en 1
     }
 }

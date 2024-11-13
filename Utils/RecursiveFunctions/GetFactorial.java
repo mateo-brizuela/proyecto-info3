@@ -1,6 +1,6 @@
-package ProyectoJava.Practico1;
+package Utils.RecursiveFunctions;
 
-public class CalcularFactorial {
+public class GetFactorial {
     public static void main(String[] args) {
         int num = 5;
         int result;
