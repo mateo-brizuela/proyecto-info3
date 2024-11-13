@@ -4,11 +4,13 @@ public class Node<T> {
     private T data;
     private Node<T> next;
 
+    // constructor
     public Node(T data) {
         this.data = data;
         this.next = null;
     }
 
+    // getters y setters
     public T getData() {
         return data;
     }

@@ -1,8 +1,11 @@
 package Utils.StackAndQueue;
 
+
 public class Queue<T> {
-    private Node<T> front, rear;
+    private Node<T> front; 
+    private Node<T> rear;
     private int size;  // Atributo para llevar el tamaño de la cola
+
 
     public Queue() {
         this.front = this.rear = null;
