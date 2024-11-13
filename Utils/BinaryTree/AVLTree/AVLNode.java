@@ -2,8 +2,7 @@ package Utils.BinaryTree.AVLTree;
 import Utils.BinaryTree.*;
 
 public class AVLNode extends TreeNode<AVLNode> {
-    private int height; // Altura del nodo
-
+    private int height; // Altura del nodo en el árbol AVL
 
     @Override
     public String toString() {
@@ -30,13 +29,13 @@ public class AVLNode extends TreeNode<AVLNode> {
     public int getBalanceFactor() {
         int leftHeight = getLeft() != null ? ((AVLNode) getLeft()).getHeight() : 0;
         int rightHeight = getRight() != null ? ((AVLNode) getRight()).getHeight() : 0;
-        return leftHeight - rightHeight;
+        return leftHeight - rightHeight; // Retorna la diferencia de alturas
     }
 
-    // Actualiza la altura del nodo en función de sus hijos
+    // Actualiza la altura del nodo en función de la altura de sus hijos
     public void updateHeight() {
         int leftHeight = getLeft() != null ? ((AVLNode) getLeft()).getHeight() : 0;
         int rightHeight = getRight() != null ? ((AVLNode) getRight()).getHeight() : 0;
-        height = 1 + Math.max(leftHeight, rightHeight);
+        height = 1 + Math.max(leftHeight, rightHeight); // La altura es 1 + el máximo de sus hijos
     }
 }

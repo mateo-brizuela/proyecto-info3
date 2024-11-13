@@ -4,56 +4,59 @@ import Utils.BinaryTree.*;
 
 public class AVLTree extends BinaryTree<AVLNode> {
 
-    // Inserta un nodo en el árbol AVL
+    // Método para insertar un nodo en el árbol AVL
     @Override
     public void insert(AVLNode node) {
-        setRoot(insertRec(getRoot(), node));
+        setRoot(insertRec(getRoot(), node)); // Inserta el nodo recursivamente y actualiza la raíz
     }
 
-    // Implementación del método abstracto delete() de BinaryTree
+    // Método delete() abstracto de BinaryTree no implementado
     @Override
     public AVLNode delete() {
         throw new UnsupportedOperationException("Use delete(int data) para eliminar un nodo específico.");
     }
 
-    // Método de eliminación con verificación de existencia
+    // Método para eliminar un nodo específico dado un valor
     public boolean delete(int data) {
-        AVLNode nodeToDelete = searchNode(data);
+        AVLNode nodeToDelete = searchNode(data); // Busca el nodo
         if (nodeToDelete == null) {
-            return false; // El nodo no existe
+            return false; // Retorna falso si el nodo no existe
         } else {
-            setRoot(deleteRec(getRoot(), data));
-            return true; // El nodo fue eliminado
+            setRoot(deleteRec(getRoot(), data)); // Elimina el nodo recursivamente y actualiza la raíz
+            return true; // Retorna verdadero si el nodo fue eliminado
         }
     }
 
     // Método recursivo de eliminación
     private AVLNode deleteRec(AVLNode current, int data) {
         if (current == null) {
-            return null;
+            return null; // Nodo no encontrado
         }
 
+        // Compara el valor para encontrar el nodo
         if (data < current.getData()) {
-            current.setLeft(deleteRec(current.getLeft(), data));
+            current.setLeft(deleteRec(current.getLeft(), data)); // Busca en el subárbol izquierdo
         } else if (data > current.getData()) {
-            current.setRight(deleteRec(current.getRight(), data));
+            current.setRight(deleteRec(current.getRight(), data)); // Busca en el subárbol derecho
         } else {
+            // Caso en que el nodo tiene solo un hijo o ninguno
             if (current.getLeft() == null || current.getRight() == null) {
                 return (current.getLeft() != null) ? current.getLeft() : current.getRight();
             }
+            // Caso con dos hijos: encuentra el nodo mínimo del subárbol derecho
             AVLNode minLargerNode = findMin(current.getRight());
             current.setData(minLargerNode.getData());
-            current.setRight(deleteRec(current.getRight(), minLargerNode.getData()));
+            current.setRight(deleteRec(current.getRight(), minLargerNode.getData())); // Elimina el nodo mínimo
         }
 
-        current.updateHeight();
-        return balance(current);
+        current.updateHeight(); // Actualiza la altura del nodo
+        return balance(current); // Balancea el árbol a partir del nodo actual
     }
 
     // Método recursivo para insertar un nodo
     private AVLNode insertRec(AVLNode current, AVLNode node) {
         if (current == null) {
-            return node;
+            return node; // Inserta el nodo en la posición correcta
         }
         if (node.getData() < current.getData()) {
             current.setLeft(insertRec(current.getLeft(), node));
@@ -65,28 +68,28 @@ public class AVLTree extends BinaryTree<AVLNode> {
             return current; // Si el nodo ya existe, no se inserta
         }
 
-        current.updateHeight();
-        return balance(current);
+        current.updateHeight(); // Actualiza la altura después de la inserción
+        return balance(current); // Balancea el árbol a partir del nodo actual
     }
 
-    // Balanceo del nodo
+    // Balanceo del nodo para mantener las propiedades del árbol AVL
     private AVLNode balance(AVLNode node) {
         int balanceFactor = node.getBalanceFactor();
-        if (balanceFactor > 1) {
+        if (balanceFactor > 1) { // Caso de desbalance a la izquierda
             if (node.getLeft().getBalanceFactor() < 0) {
-                node.setLeft(rotateLeftSimple(node.getLeft()));
+                node.setLeft(rotateLeftSimple(node.getLeft())); // Rotación izquierda-derecha
             }
-            node = rotateRightSimple(node);
-        } else if (balanceFactor < -1) {
+            node = rotateRightSimple(node); // Rotación derecha
+        } else if (balanceFactor < -1) { // Caso de desbalance a la derecha
             if (node.getRight().getBalanceFactor() > 0) {
-                node.setRight(rotateRightSimple(node.getRight()));
+                node.setRight(rotateRightSimple(node.getRight())); // Rotación derecha-izquierda
             }
-            node = rotateLeftSimple(node);
+            node = rotateLeftSimple(node); // Rotación izquierda
         }
         return node;
     }
 
-    // Rotación simple a la derecha
+    // Rotación simple a la derecha para balancear el árbol
     private AVLNode rotateRightSimple(AVLNode pivotParent) {
         AVLNode pivot = pivotParent.getLeft();
         AVLNode rChild = pivot.getRight();
@@ -117,7 +120,7 @@ public class AVLTree extends BinaryTree<AVLNode> {
         return pivot;
     }
 
-    // Rotación simple a la izquierda
+    // Rotación simple a la izquierda para balancear el árbol
     private AVLNode rotateLeftSimple(AVLNode pivotParent) {
         AVLNode pivot = pivotParent.getRight();
         AVLNode lChild = pivot.getLeft();

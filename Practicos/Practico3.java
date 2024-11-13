@@ -88,26 +88,35 @@ public class Practico3 {
         System.out.println("Prueba de pila con arreglo:");
         testArrayStack();
 
+        // Verificación de palíndromos con ejemplos y resultado en pantalla
         System.out.println("\nVerificación de palíndromos:");
-        System.out.println(isPalindrome("anilina"));
-        System.out.println(isPalindrome("Hola mundo"));
+        String word1 = "anilina";
+        String word2 = "Hola mundo";
+        System.out.println("¿'" + word1 + "' es un palíndromo?: " + isPalindrome(word1));
+        System.out.println("¿'" + word2 + "' es un palíndromo?: " + isPalindrome(word2));
 
+        // Verificación de paréntesis balanceados con ejemplos y resultado en pantalla
         System.out.println("\nVerificación de paréntesis balanceados:");
-        System.out.println(areParenthesesBalanced("(1+(2*3)+((8)/4))"));
-        System.out.println(areParenthesesBalanced("(1+(2*3)+(8)/4))"));
+        String expr1 = "(1+(2*3)+((8)/4))";
+        String expr2 = "(1+(2*3)+(8)/4))";
+        System.out.println("¿'" + expr1 + "' tiene paréntesis balanceados?: " + areParenthesesBalanced(expr1));
+        System.out.println("¿'" + expr2 + "' tiene paréntesis balanceados?: " + areParenthesesBalanced(expr2));
 
         System.out.println("\nPrueba de cola con arreglo:");
         testArrayQueue();
 
+        // Ordenamiento de una cola con valores de ejemplo y mostrando el resultado
         System.out.println("\nOrdenamiento de Cola:");
         Queue<Integer> queue = new Queue<>();
         queue.enqueue(3);
         queue.enqueue(1);
         queue.enqueue(4);
         queue.enqueue(2);
+        System.out.print("Cola antes de ordenar: ");
         displayQueue(queue);
 
         sortQueueAscending(queue);
+        System.out.print("Cola después de ordenar en orden ascendente: ");
         displayQueue(queue);
     }
 
