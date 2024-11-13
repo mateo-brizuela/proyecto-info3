@@ -2,13 +2,6 @@ package Utils.RecursiveFunctions;
 
 public class OnesInBinary {
 
-    public static void main(String[] args) {
-        int num = 13; // Ejemplo de número para probar
-        int numOfOnes = CountOnes(num);
-
-        System.out.println("El número de unos en la representación binaria de " + num + " es: " + numOfOnes);
-    }
-
     public static int CountOnes(int n) {
         // Caso base: si n es 0, no hay unos en su representación binaria
         if (n == 0) {

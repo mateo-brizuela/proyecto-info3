@@ -2,13 +2,6 @@ package Utils.RecursiveFunctions;
 
 public class RecursiveMultiplication {
 
-    public static void main(String[] args) {
-        int a = 2;
-        int b = 4;
-
-        int result = multiplication(a, b);
-        System.out.println("El producto de " + a + " y " + b + " es " + result);
-    }
 
     public static int multiplication(int a, int b) {
         // Caso base: si b es 0, el producto es 0

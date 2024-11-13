@@ -1,9 +1,11 @@
-package Utils.BinaryTree.AVLTree;
+package Testing;
 import Utils.BinaryTree.*;
+import Utils.BinaryTree.AVLTree.AVLNode;
+import Utils.BinaryTree.AVLTree.AVLTree;
 
 import java.util.Scanner;
 
-public class Main {
+public class AVLMain {
     public static void main(String[] args) {
         AVLTree avlTree = new AVLTree(); // Crea una instancia de árbol AVL
         Scanner scanner = new Scanner(System.in); // Scanner para leer la entrada del usuario

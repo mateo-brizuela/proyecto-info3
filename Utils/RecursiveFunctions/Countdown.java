@@ -2,11 +2,6 @@ package Utils.RecursiveFunctions;
 
 public class Countdown {
 
-    public static void main(String[] args) {
-        int n = 4;
-        System.out.print("Conteo regresivo desde " + n + ": ");
-        doCountdown(n);
-    }
 
     public static void doCountdown(int n) {
         if (n < 1) {
