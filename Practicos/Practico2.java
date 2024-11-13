@@ -1,18 +1,10 @@
-package Utils.Sorts;
+package Practicos;
 import Utils.Sorts.*;
 import java.util.Scanner;
-
-import Utils.Sorts.InsertionSort;
-import Utils.Sorts.ShellSort;
-import Utils.Sorts.QuickSort;
-
-import java.util.Random;
-import java.util.Scanner;
-
-import java.util.Scanner;
 import java.util.Random;
 
-public class Main {
+
+public class Practico2 {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int option;
