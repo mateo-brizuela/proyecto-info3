@@ -1,11 +1,13 @@
-public class MonticuloBinario{
+package Utils.BinaryHeap;
+
+public class BinaryHeap{
 //atributos
     private static final int default_capacity=100;
     private int CurrentSize;
     private Integer[] array;
 
 //constructor
-public MonticuloBinario() {
+public BinaryHeap() {
     CurrentSize = 0;
     this.array = new Integer[default_capacity+1];
 }
@@ -13,7 +15,7 @@ public MonticuloBinario() {
 //Metodos   
 
 //Imprimir
-public void imprimirMonticulo() {
+public void printHeap() {
     for (int i = 1; i <= CurrentSize; i++) {
         System.out.print(array[i] + " ");
     }
@@ -21,22 +23,22 @@ public void imprimirMonticulo() {
 }
 
 //Insertar
-public void insertar(Integer x) {
+public void insert(Integer x) {
     if (CurrentSize + 1 == array.length) {
-        duplicarArray();
+        duplicateArray();
     }
 
     int hueco = ++CurrentSize; // Incrementa el tamaño y establece la posición del nuevo elemento
     array[0]=x;
 //Ajustar la posicion del nuevo elemento en el monticulo
-    for(; comparar(x, array[hueco/2])<0; hueco/=2){
+    for(; comparate(x, array[hueco/2])<0; hueco/=2){
         array[hueco] = array[hueco/2];//mueve padre abajo si el nuevo elemento es menor
     }
     array[hueco]=x;
 }
 
 //Comparar dos Integer
-private int comparar(Integer a, Integer b) {
+private int comparate(Integer a, Integer b) {
     // Verifica que ambos enteros no sean nulos
     if (a == null || b == null) {
         throw new IllegalArgumentException("Los enteros no pueden ser nulos");
@@ -46,7 +48,7 @@ private int comparar(Integer a, Integer b) {
 }
 
 //Duplicar (funcion por si sobrepasa el maximo)
-private void duplicarArray() {
+private void duplicateArray() {
     // Crea un nuevo array con el doble de tamaño
     Integer[] nuevoArray =new Integer [array.length * 2];
     
@@ -60,7 +62,7 @@ private void duplicarArray() {
     }
 
 //Eliminar menor
-public Integer eliminarMin() {
+public Integer eliminateMin() {
     if (CurrentSize == 0) {
         throw new IllegalStateException("El montículo está vacío.");
     }
@@ -78,10 +80,10 @@ Integer tmp = array[hueco];
 
 for(; hueco*2 <= CurrentSize; hueco = hijo){
     hijo=hueco*2;
-    if (hijo != CurrentSize && comparar(array[hijo+1], array[hijo])<0) {
+    if (hijo != CurrentSize && comparate(array[hijo+1], array[hijo])<0) {
         hijo++;
     }
-    if(comparar(array[hijo], tmp)<0){
+    if(comparate(array[hijo], tmp)<0){
         array[hueco]=array[hijo];
     }
     else
