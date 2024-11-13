@@ -1,3 +1,4 @@
+package Utils.HashTable;
 //PARA EVITAR LAS COLICIONES HEMOS UTILIZADO HASHING ENLAZADO
 
 public class HashTable <K, V> {

@@ -1,3 +1,5 @@
+package Utils.HashTable;
+
 public class HashNode <K, V> {
     K key;
     V value;
