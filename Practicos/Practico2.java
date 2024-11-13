@@ -3,12 +3,12 @@ import Utils.Sorts.*;
 import java.util.Scanner;
 import java.util.Random;
 
-
 public class Practico2 {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int option;
 
+        // Menú para seleccionar método de ordenamiento
         do {
             System.out.println("Seleccione el método de ordenamiento:");
             System.out.println("1. Insertion Sort");
@@ -30,6 +30,7 @@ public class Practico2 {
 
             Integer[] array;
             if (arrayOption == 1) {
+                // Opción para ingresar el arreglo manualmente
                 System.out.print("Ingrese el tamaño del arreglo: ");
                 int size = scanner.nextInt();
                 array = new Integer[size];
@@ -38,6 +39,7 @@ public class Practico2 {
                     array[i] = scanner.nextInt();
                 }
             } else {
+                // Genera un arreglo aleatorio de enteros
                 System.out.print("Ingrese el tamaño del arreglo: ");
                 int size = scanner.nextInt();
                 array = generateRandomArray(size);
@@ -45,6 +47,7 @@ public class Practico2 {
                 displayArray(array);
             }
 
+            // Ejecución del método de ordenamiento seleccionado
             switch (option) {
                 case 1:
                     InsertionSort<Integer> insertionSort = new InsertionSort<>(array);

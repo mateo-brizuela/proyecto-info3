@@ -4,7 +4,7 @@ import Utils.StackAndQueue.*;
 
 public class Practico3 {
 
-    // Ejercicio 1: Implementación de una pila
+    // Ejercicio 1: Implementación de una pila usando un arreglo
     public static void testArrayStack() {
         ArrayStack<Integer> stack = new ArrayStack<>();
         stack.push(10);
@@ -14,16 +14,18 @@ public class Practico3 {
         System.out.println("Elemento en la cima después de eliminar: " + stack.top());
     }
 
-    // Ejercicio 2: Comprobación de palíndromos
+    // Ejercicio 2: Verificación de palíndromos con pila
     public static boolean isPalindrome(String input) {
         input = input.replaceAll("\\s+", "").toLowerCase();
         Stack<Character> stack = new Stack<>();
-
         int len = input.length();
+        
+        // Empuja la primera mitad de caracteres
         for (int i = 0; i < len / 2; i++) {
             stack.push(input.charAt(i));
         }
 
+        // Compara la segunda mitad con los caracteres en la pila
         for (int i = (len + 1) / 2; i < len; i++) {
             if (stack.pop() != input.charAt(i)) {
                 return false;
@@ -32,7 +34,7 @@ public class Practico3 {
         return true;
     }
 
-    // Ejercicio 3: Verificación de expresiones matemáticas
+    // Ejercicio 3: Verificación de paréntesis balanceados
     public static boolean areParenthesesBalanced(String expr) {
         Stack<Character> stack = new Stack<>();
         for (char ch : expr.toCharArray()) {
@@ -47,7 +49,7 @@ public class Practico3 {
         return stack.isEmpty();
     }
 
-    // Ejercicio 4: Implementación de una cola
+    // Ejercicio 4: Implementación de una cola usando un arreglo
     public static void testArrayQueue() {
         ArrayQueue<String> queue = new ArrayQueue<>();
         queue.enqueue("A");
@@ -57,14 +59,11 @@ public class Practico3 {
         System.out.println("¿La cola está vacía?: " + queue.isEmpty());
     }
 
-    // Ejercicio 5: Ordenar una cola en orden ascendente
+    // Ejercicio 5: Ordenamiento de cola en orden ascendente
     public static void sortQueueAscending(Queue<Integer> queue) {
         Queue<Integer> auxQueue = new Queue<>();
-        
         while (!queue.isEmpty()) {
             int min = queue.dequeue();
-            
-            // Encuentra el valor mínimo en la cola original
             int size = queue.size();
             for (int i = 0; i < size; i++) {
                 int current = queue.dequeue();
@@ -75,50 +74,40 @@ public class Practico3 {
                     queue.enqueue(current);
                 }
             }
-            
-            // Coloca el valor mínimo en la cola auxiliar
             auxQueue.enqueue(min);
         }
-        
-        // Pasar todos los elementos ordenados de auxQueue de vuelta a queue
+
+        // Mueve los elementos ordenados de nuevo a la cola original
         while (!auxQueue.isEmpty()) {
             queue.enqueue(auxQueue.dequeue());
         }
     }
-    
-    
-    
 
     public static void main(String[] args) {
-        // Ejemplo del ejercicio 1: Uso de la pila
+        // Ejemplos de ejecución para cada ejercicio
         System.out.println("Prueba de pila con arreglo:");
         testArrayStack();
 
-        // Ejemplo del ejercicio 2: Verificación de palíndromos
-        System.out.println("\nVerificación de palíndromo para 'anilina': " + isPalindrome("anilina"));
-        System.out.println("Verificación de palíndromo para 'Hola mundo': " + isPalindrome("Hola mundo"));
+        System.out.println("\nVerificación de palíndromos:");
+        System.out.println(isPalindrome("anilina"));
+        System.out.println(isPalindrome("Hola mundo"));
 
-        // Ejemplo del ejercicio 3: Verificación de paréntesis balanceados
-        System.out.println("\nVerificación de balance de paréntesis para '(1+(2*3)+((8)/4))': " +
-                           areParenthesesBalanced("(1+(2*3)+((8)/4))"));
-        System.out.println("Verificación de balance de paréntesis para '(1+(2*3)+(8)/4))': " +
-                           areParenthesesBalanced("(1+(2*3)+(8)/4))"));
+        System.out.println("\nVerificación de paréntesis balanceados:");
+        System.out.println(areParenthesesBalanced("(1+(2*3)+((8)/4))"));
+        System.out.println(areParenthesesBalanced("(1+(2*3)+(8)/4))"));
 
-        // Ejemplo del ejercicio 4: Uso de la cola
         System.out.println("\nPrueba de cola con arreglo:");
         testArrayQueue();
 
-        // Ejemplo del ejercicio 5: Ordenar cola en orden ascendente
+        System.out.println("\nOrdenamiento de Cola:");
         Queue<Integer> queue = new Queue<>();
         queue.enqueue(3);
         queue.enqueue(1);
         queue.enqueue(4);
         queue.enqueue(2);
-        System.out.println("\nCola antes de ordenar:");
         displayQueue(queue);
 
         sortQueueAscending(queue);
-        System.out.println("Cola después de ordenar en orden ascendente:");
         displayQueue(queue);
     }
 
